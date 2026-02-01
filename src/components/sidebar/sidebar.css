@@ -1,0 +1,40 @@
+.sidebar {
+  min-height: 100vh;
+  padding: 24px;
+  background: #ffffff;
+  color: #111827;
+  border-right: 1px solid #dce1e7;
+}
+
+.sidebar-title {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 32px;
+  line-height: 1.4;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #000000;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-nav li:hover {
+  background: #e9ecef;
+}
+
+.sidebar-nav .active {
+  background: #f1f3f5;
+  font-weight: 600;
+}
