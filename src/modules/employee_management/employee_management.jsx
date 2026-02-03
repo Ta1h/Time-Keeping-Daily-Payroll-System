@@ -113,10 +113,38 @@ export default function EmployeeManagement() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prev) => ({
-      ...prev,
+    const numValue = value === "" ? "" : Number(value);
+
+    let updatedData = {
+      ...formData,
       [name]: name === "active" ? Number(value) : value,
-    }));
+    };
+
+    // Auto-calculate rates based on which field changed
+    if (name === "monthly_rate" && numValue !== "") {
+      // Monthly to Daily: divide by 22 working days
+      const dailyRate = numValue / 22;
+      updatedData.daily_rate = dailyRate.toFixed(2);
+      // Daily to Hourly: divide by 8 hours
+      const hourlyRate = dailyRate / 8;
+      updatedData.hourly_rate = hourlyRate.toFixed(2);
+    } else if (name === "daily_rate" && numValue !== "") {
+      // Daily to Hourly: divide by 8 hours
+      const hourlyRate = numValue / 8;
+      updatedData.hourly_rate = hourlyRate.toFixed(2);
+      // Daily to Monthly: multiply by 22 working days
+      const monthlyRate = numValue * 22;
+      updatedData.monthly_rate = monthlyRate.toFixed(2);
+    } else if (name === "hourly_rate" && numValue !== "") {
+      // Hourly to Daily: multiply by 8 hours
+      const dailyRate = numValue * 8;
+      updatedData.daily_rate = dailyRate.toFixed(2);
+      // Daily to Monthly: multiply by 22 working days
+      const monthlyRate = dailyRate * 22;
+      updatedData.monthly_rate = monthlyRate.toFixed(2);
+    }
+
+    setFormData(updatedData);
   };
 
   const handleSubmit = async (event) => {
@@ -171,10 +199,6 @@ export default function EmployeeManagement() {
 
   // Define table columns
   const columns = [
-    {
-      accessorKey: "id",
-      header: "ID",
-    },
     {
       accessorKey: "employee_name",
       header: "Employee Name",
